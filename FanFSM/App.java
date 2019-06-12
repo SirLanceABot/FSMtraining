@@ -86,7 +86,6 @@ public class App {
             Fan fan = x.new Fan();
             System.out.print( "Type 'p' and enter to simulate pulling a ceiling fan chain; the fan is currently off; 'q' to quit\n" );
 
-// if if if if if if if if if if if if if if if if if if if if if if if if if           
             while (true) {
                 String input = scanner.next(); // space delimited tokens; must hit enter to send line to program; can use nextLine
                 input = input.trim();
@@ -97,22 +96,6 @@ public class App {
                     break;
                 }
             }
-/////////////////////////////////////////////////////////////////////////////
-// switch switch switch switch switch switch switch switch switch switch switch 
-            inputLoop:
-            while (true) {
-                String input = scanner.next(); // space delimited tokens; must hit enter to send line to program; can use nextLine
-                input = input.trim().toLowerCase();
-                switch (input)
-                {
-                    case "p": // make the event to trigger the transition
-                        fan.pullChain();
-                        break;
-                    case "q":
-                        break inputLoop;
-                }
-            }
-/////////////////////////////////////////////////////////////////////////////
             scanner.close();
          }
 }
