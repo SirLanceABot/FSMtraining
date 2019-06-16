@@ -1,6 +1,6 @@
 /*
 Use state pattern in Java to define open and closed states that can use
-open, read, and close requests to move between states
+open and close requests to move between states and handle a read request as appropriate
 RK Thomas
 5/23/2019
 */
@@ -28,25 +28,25 @@ public class App {
             current = state;
         }
     
-        public void openRequest() { // event that changes the state of the FileConnection
+        public void openRequest() { // request that may change the state of the FileConnection
             current.openRequest(this);
         }
 
-        public void readRequest() { // event that changes the state of the FileConnection
+        public void readRequest() { // read the file if possible for the current state otherwise error
             current.readRequest(this);
         }
 
-        public void closeRequest() { // event that changes the state of the FileConnection
+        public void closeRequest() { // request that may change the state of the FileConnection
             current.closeRequest(this);
         }
     }
     
     class Open extends State { // current state
-        public void openRequest(FileConnection wrapper) { // handle the transition
+        public void openRequest(FileConnection wrapper) { // already in requested state
             System.out.println("File already open");
         }
 
-        public void readRequest(FileConnection wrapper) { // handle the transition
+        public void readRequest(FileConnection wrapper) { // can read an open file
             System.out.println( "Read something" );
         }
 
@@ -62,12 +62,12 @@ public class App {
             System.out.println("Opening file");
         }
 
-        public void readRequest(FileConnection wrapper) { // handle the transition
+        public void readRequest(FileConnection wrapper) { // impossible to read a closed file
             System.out.println( "Can't read closed file" );
         }
 
         public void closeRequest(FileConnection wrapper) { // handle the transition
-            wrapper.setState(new Closed()); // new state
+            wrapper.setState(new Closed()); // already in requested state
             System.out.println( "File already closed" );
         }
     }
@@ -81,15 +81,15 @@ public class App {
             while (true) {
                 String input = scanner.next(); // space delimited tokens; must hit enter to send line to program; can use nextLine
                 input = input.trim();
-                if (input.equalsIgnoreCase("o")) { // make the event to trigger the transition
+                if (input.equalsIgnoreCase("o")) { // make the request to trigger the transition
                     FileConnection.openRequest();
                     }
                 else
-                if (input.equalsIgnoreCase("r")) { // make the event to trigger the transition
+                if (input.equalsIgnoreCase("r")) { // make the request to read the file
                     FileConnection.readRequest();
                     }
                 else
-                if (input.equalsIgnoreCase("c")) { // make the event to trigger the transition
+                if (input.equalsIgnoreCase("c")) { // make the request to trigger the transition
                     FileConnection.closeRequest();
                     }
                 else 
