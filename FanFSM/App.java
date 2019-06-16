@@ -28,7 +28,7 @@ public class App {
         Also, this default method may be required becasue of the way the class are internal to the main static class
         and had to be instantiated to access all the other classes
         */
-        public void pullChain(Fan wrapper) {System.out.println("Never gets here; oops if it does");}
+        abstract public void pullChain(Fan wrapper);
     }
 
     class Fan { // the "wrapper" class that works differently as it moves between the various classes that define the various states
