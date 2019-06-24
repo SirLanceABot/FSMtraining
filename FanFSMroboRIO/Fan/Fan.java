@@ -42,7 +42,7 @@ import org.jeasy.states.core.FiniteStateMachineBuilder;
  * This tutorial is an implementation of the fan FSM:
  * <p>
  * The fan has four states: Off, Low, Medium, High. There is one input that affects its state: pulling the chain.
- * Each pull of the change advancs the speed.  High speed advances to Off.
+ * Each pull of the change advances the speed.  High speed advances to Off.
  *
  * @author RK Thomas
  */
@@ -58,13 +58,13 @@ public class Fan {
     each user-defined event has a constructor
 
     need event handlers -an event handler is actions to perform when an event is triggered.  At a minimum no actions are required
-    in the event handler other than to construct the super to transistion to the next state.
+    in the event handler other than to construct the super to transition to the next state.
     The FSM framework handles the basic transition automatically if an event is fired.
 
     need transitions - each user-defined transition is built up in JAva code from a "tabular" type statement of source state,
     event, event handler, and target state.
     A final state may be defined.  In this implementation of an FSM the final state does not accept any more events. 
-    The general FSM (which this is not) the acceptatance state might be a final state but generally is just a 
+    The general FSM (which this is not) the acceptance state might be a final state but generally is just a 
     state which might be considered "idle" waiting for more work to be performed and processed through the FSM.
 
     */
