@@ -8,6 +8,9 @@ Student Exercise Answer Key
 #2 FanFSM – local; state pattern; Scanner input
 Demonstration shown as completed
 
+#2 corrected NotificationStates – local; state pattern; Scanner input
+Demonstration shown as completed
+
 #3 FileFSM – local; state pattern; Scanner input
 Student Exercise Answer Key
 
