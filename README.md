@@ -5,10 +5,7 @@ Finite State Machines lessons - examples and "answers" to exercises.
 #1 FanFSMIfSwitch – local; Scanner input; “if” FSM; “switch” FSM
 Student Exercise Answer Key
 
-#2 FanFSM – local; state pattern; Scanner input
-Demonstration shown as completed
-
-#2 corrected NotificationStates – local; state pattern; Scanner input
+#2 NotificationStates – local; state pattern; Scanner input
 Demonstration shown as completed
 
 #3 FileFSM – local; state pattern; Scanner input
