@@ -18,5 +18,5 @@ Demonstration shown as completed
 Student Exercise Answer Key
 
 #6 PotExample – roboRIO; linear path; Joystick input
-See FSMexample.java for FSM version
+See Elevator2019Robot.java for FSM version
 Demonstration shown as completed
