@@ -86,6 +86,8 @@ final class FiniteStateMachineImpl implements FiniteStateMachine {
                     currentState = transition.getTargetState();
                     //System.out.println("about to enter " + currentState.getName());
                     currentState.doEnter(); // new state needs to enter
+                    // current state's doAction
+                    currentState.doAction();
 
                     //save last triggered event and transition
                     lastEvent = event;
