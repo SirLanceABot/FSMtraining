@@ -1,3 +1,5 @@
+FanFSMroboRIO has the latest greatest version of the modified jeasy easy states
+
 # Summer2019FSM
 
 Finite State Machines lessons - examples and "answers" to exercises.
