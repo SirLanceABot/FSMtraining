@@ -144,6 +144,10 @@ public class Fan {
         // end of processing events
 
         // current state's doAction
+        // doAction is automatically run for each transition to a state
+        // this doAction is added to run for each iteration of fanRun which is run
+        // for each IterativeRobot time step
+        // (Thus for a transition to a state the doAction would be run twice.)
         fanStateMachine.getCurrentState().doAction();
 
         // update user presentation of status

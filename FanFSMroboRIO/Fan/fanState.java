@@ -4,7 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import org.jeasy.states.api.State;
 
-public class fanState extends State
+public abstract class fanState extends State
 {
     Fan fan;
     double fanSpeed;
