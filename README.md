@@ -13,10 +13,10 @@ Demonstration shown as completed
 #3 FileFSM – local; state pattern; Scanner input
 Student Exercise Answer Key
 
-#4 TurnstileFSM – roboRIO; jeasy; 5 turnstiles; SmartDashboard input
+#4 TurnstileFSM – roboRIO; j-easy easy states (SLAB older version); 5 turnstiles; SmartDashboard input
 Demonstration shown as completed
 
-#5 FanFSMroboRIO – roboRIO; jeasy; 2 fans; SmartDashboard input
+#5 FanFSMroboRIO – roboRIO; j-easy easy states (SLAB newer version); 2 fans; SmartDashboard input
 Student Exercise Answer Key
 
 #6 PotExample – roboRIO; linear path; Joystick input
