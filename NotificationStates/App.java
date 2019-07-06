@@ -26,7 +26,6 @@ public class App {
         Also, this default method may be required becasue of the way the class are internal to the main static class
         and had to be instantiated to access all the other classes
         */
-        abstract public void setState(Alarm wrapper);
         abstract public void notify(String message);
     }
 
