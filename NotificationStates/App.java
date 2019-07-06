@@ -47,36 +47,22 @@ public class App {
     }
     
     class Silent extends State {
-        public void setState(Alarm wrapper) // handle the transition
-        {
-            wrapper.setState(new Silent()); // new state
-        }
         public void notify(String message) {
             System.out.println("Silently displaying " + message);
         }
     }
     
     class Vibrate extends State {
-        public void setState(Alarm wrapper)
-        {
-            wrapper.setState(new Vibrate());
-        }
         public void notify(String message) {
             System.out.println("Vibrating " + message);
         }
     }
 
     class Tone extends State {
-        public void setState(Alarm wrapper)
-        {
-            wrapper.setState(new Tone());
-        }
         public void notify(String message) {
             System.out.println("Tone " + message);
         }
     }
-  
-    //final Silent silent = new Silent();
 
          public static void main( String[] args ) throws IOException {
 
