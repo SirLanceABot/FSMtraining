@@ -19,6 +19,6 @@ Demonstration shown as completed
 #5 FanFSMroboRIO – roboRIO; j-easy easy states (SLAB newer version); 2 fans; SmartDashboard input
 Student Exercise Answer Key
 
-#6 PotExample – roboRIO; linear path; Joystick input
+#6 ElevatorFSM Example – roboRIO; linear path and FSM styles; Joystick input
 See Elevator2019Robot.java for FSM version
 Demonstration shown as completed
