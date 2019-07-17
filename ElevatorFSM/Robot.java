@@ -27,11 +27,50 @@ import edu.wpi.first.wpilibj.TimedRobot;
 public class Robot extends TimedRobot {
 
 // States used in versions 2 and 3
+// each State has an action associated with it
+// only version 3 example fully utilizes all the enum constant methods
   public static enum State {
+
 // speed while in the state (subject to P controller adjustment)
-    Off(0.0),
-    Holding(0.05),
-    Moving(.5);
+//     currentState.speed()
+// doAction() while in the state
+//     currentState.doAction();
+//
+// having both the argument to the constructor(speed) and implement an abstract method (doAction()) is likely redundant
+// at least it is in this example, they are presented as a tutorial of how to
+// pass both a variable and a method to an enum constant
+// note that another concrete method (speed()) is also shown for example)
+    Off(0.0)
+    {
+      void doAction(TalonSRX motorController, double speed){
+        System.out.println("testing Off");
+        motorController.set(ControlMode.PercentOutput, speed);
+      }
+    },
+    Holding(0.05)
+    {
+      void doAction(TalonSRX motorController, double speed){
+        System.out.println("testing Holding");
+        speed = 0.05; // just to show it can be changed
+        // And yes I realize the P controller as defined makes the holding speed too
+        // low that the Talon SRX says it considers it 0 so changing it to 0.05
+        // actually gives us the correct holding value.
+        // There is a chance that the real elevator would sag a little during
+        // holding and the controller would bump it back up.
+        // This could be benefit in case we don't know the precise holding speed
+        // or if it changes for some reason.
+        // For our simple example this is crude and might not be how we'd do it for real
+        motorController.set(ControlMode.PercentOutput, speed);
+      }
+    },
+    Moving(.5)
+    {
+      void doAction(TalonSRX motorController, double speed){
+        System.out.println("testing Moving");
+        motorController.set(ControlMode.PercentOutput, speed);
+      }
+    };
+    abstract void doAction(TalonSRX motorController, double speed);
 
     private final double speed;
 
@@ -259,10 +298,12 @@ public class Robot extends TimedRobot {
 
 // make the transition to a new currentState
     currentState = Transition.findNextState (currentState, event);
-    m_elevatorMotor_1.set(ControlMode.PercentOutput,
-      Math.copySign(Math.min(currentState.speed(), Math.abs(currentState.speed()*speedAdjust)), speedAdjust) );
+    // m_elevatorMotor_1.set(ControlMode.PercentOutput,
+    //   Math.copySign(Math.min(currentState.speed(), Math.abs(currentState.speed()*speedAdjust)), speedAdjust) );
+    currentState.doAction(m_elevatorMotor_1, Math.copySign(Math.min(currentState.speed(), Math.abs(currentState.speed()*speedAdjust)), speedAdjust) );
     }
 
   } // end teleop
 
 } // end Robot
+//   https://docs.oracle.com/javase/8/docs/technotes/guides/language/enums.html
