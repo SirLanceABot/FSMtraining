@@ -19,6 +19,9 @@ Demonstration shown as completed
 #5 FanFSMroboRIO – roboRIO; j-easy easy states (SLAB newer version); 2 fans; SmartDashboard input
 Student Exercise Answer Key
 
-#6 ElevatorFSM Example – roboRIO; linear path and FSM styles; Joystick input
+#6 ElevatorFSM Example – roboRIO; 3 different coding styles - linear path and 2 FSM styles; Joystick input
 See Elevator2019Robot.java for FSM version
 Demonstration shown as completed
+
+#7 FSMtemplate - roboRIO; sdimilar to the FSM example in #6.  One complete worked nice FSM style using enums and table look up
+of a Moore FSM - a good model
