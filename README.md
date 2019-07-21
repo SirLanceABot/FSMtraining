@@ -23,5 +23,5 @@ Student Exercise Answer Key
 See Elevator2019Robot.java for FSM version
 Demonstration shown as completed
 
-#7 FSMtemplate - roboRIO; sdimilar to the FSM example in #6.  One complete worked nice FSM style using enums and table look up
+#7 FSMtemplate - roboRIO; similar to the FSM example in #6.  One complete worked nice FSM style using enums and table look up
 of a Moore FSM - a good model
