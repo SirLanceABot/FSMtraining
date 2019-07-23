@@ -22,11 +22,40 @@
 // misleading.  This is a Moore FSM with state outputs; the outputs are not associated with
 // each transition but with the new state.
 //
-// Iterative robot runs the FSM repeatedly.  The program acts as if the is an event for each
-// iteration but if there is no transition defined then the current state is maintained and the
-// doAction for the current state is run.  This refreshes any watchdogs and is recommended
-// to properly maintain a motor speed even if the speed is not changed. Thus, if off stay off,
-// if holding, keep holding; if moving keep moving.
+// In what may be more an issue of style than substance there are different ways to maintain a
+// state output.  FSM implemented in electronoc logic circuitry maintains its output as the
+// circuits run continuously if powered on.  This Java program runs a bit differently than logic
+// circuits.
+//
+// Iterative robot runs the FSM repeatedly and scans for inputs on each iteration.  The program
+// acts as if the is an event for each iteration; it would not have to, though.  The program
+// could check to see if the previous state of the inputs has changed or not and only run the
+// transition engine if the inputs have changes.  Another possibility is to add more transitions
+// with each state looping back to itself.  Then and event would trigger a transition to the
+// same state.  If there is no transition defined then the current state is maintained and the
+// or and error could be thrown that the event wasn't handled. The salient point is the doAction
+// for the current (or new current) state should be run for the iterative robot.  This refreshes
+// any watchdogs and is recommended to properly maintain a motor speed even if the speed is not
+// changed. Thus, if off, stay off, if holding, keep holding; if moving keep moving.
+//
+// This program demonstrates what is the simplest (fewest transitions, least coding but a few
+// more computer cycles are used) way to run doAction on every iteration.
+
+// The FSM does not have transistions to maintain a state - no event triggers Off to Off,
+// Moving to Moving, nor Holding to Holding.  The events are processed on every iteration - no
+// check to see if the event is new and thus may cause a transition to a new state - the FSM
+// transistion engine does that.  The transition engine returns the current state if no
+// transition had to be performed.  The doAction is run on every iteration to maintain the
+// state as recommended in robot programming even if the state has not changed.
+
+// Potential improvments to the robot control logic:
+// Better co-ordinate the moving/holding when near the target elevation because the motor
+// controller deadband clashes over so slightly with the P speed controller.  Note that this
+// simple implementation of the P controller does account for correctly holding even if the
+// elevator somehow rises above the target elevation (I don't think the actual robot code did
+// that).
+// Better yet: add a transition from holding to moving if the elevator position changes
+// significantly while supposedly holding a position.
 
 package frc.robot;
 
