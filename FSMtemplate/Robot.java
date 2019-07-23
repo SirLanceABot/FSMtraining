@@ -8,6 +8,26 @@
 
 // Coding shows a style to demonstrate FSM using "enum" and table look up of the transitions
 
+// State Transition Table
+// current state         event                     new state     state output
+// State.Off,     Event.ButtonDownNotAtElevation, State.Moving,  0.5
+// State.Moving,  Event.ButtonNotDown,            State.Off,     0.0
+// State.Holding, Event.ButtonNotDown,            State.Off,     0.0
+// State.Off,     Event.ButtonDownAtElevation,    State.Holding, 0.05
+// State.Moving,  Event.ButtonDownAtElevation,    State.Holding, 0.05
+//
+// Initial state = State.Off
+//
+// Note that the state output is repeated for each transition.  That is redundant and could be
+// misleading.  This is a Moore FSM with state outputs; the outputs are not associated with
+// each transition but with the new state.
+//
+// Iterative robot runs the FSM repeatedly.  The program acts as if the is an event for each
+// iteration but if there is no transition defined then the current state is maintained and the
+// doAction for the current state is run.  This refreshes any watchdogs and is recommended
+// to properly maintain a motor speed even if the speed is not changed. Thus, if off stay off,
+// if holding, keep holding; if moving keep moving.
+
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -66,11 +86,11 @@ public static enum Speed {
     {
       void doAction(TalonSRX motorController, Speed speed, double speedAdjust){
         System.out.println("testing Holding");
-        // The P controller as defined makes the holding speed too
-        // low that the Talon SRX says it considers it 0 so changing it to 0.05
-        // actually gives us the correct holding value so make sure min speed is okay.
+        // The P controller as defined may make the moving or holding speed so
+        // low if close (close enough?) to the target position that the Talon SRX may say it
+        // considers it 0.
         // There is a chance that the real elevator would sag a little during
-        // holding and the controller would bump it back up.
+        // holding or moving at speed 0 then the controller would bump it back up.
         // This could be benefit in case we don't know the precise holding speed
         // or if it changes for some reason.
         // For our simple example this is crude and might not be how we'd do it for real
@@ -145,7 +165,7 @@ public static enum Speed {
       {
         if (transition.currentState == currentState && transition.event == event) return transition.nextState;
       }
-        return currentState; // throw an error if here
+        return currentState; // no transition found so maintain current state
     }
   }
   // END OF TRANSITIONS
@@ -230,8 +250,7 @@ public static enum Speed {
     // ***
 
 // Decision Table to determine the event based on joystick button press
-// and if near or far from target elevation
-//
+// and if near or far from target elevation:
 //                                               Rules
 // Conditions Button Pressed Down           Yes Yes  No  No
 //            AtTargetLocation              Yes  No Yes  No
@@ -250,6 +269,7 @@ public static enum Speed {
 
 // make the transition to a new currentState
    currentState = Transition.findNextState (currentState, event);
+// do the action required of the new state
    currentState.doAction(m_elevatorMotor, currentState.speed(), speedAdjust);
 
   } // end teleop
