@@ -68,7 +68,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 
 public class Robot extends TimedRobot {
 
-// An enum Speed puts the all speeds in the same place which may
+// An enum Speed (below) puts the all speeds close together which may
 // make it easier to find and change them.
 // But that means the States (or state names) essentially have to be coded twice -
 // once for the actual State and again here for the Speeds.  I hate duplication.
@@ -94,7 +94,7 @@ public static enum Speed {
 // **
 // *
 // States of the FSM
-// each State has an action associated with it - doAction
+// each State has an action associated with it - doAction and motor speed parameter
 
   public static enum State {
 
@@ -103,6 +103,20 @@ public static enum Speed {
 // pass both a variable and a method to an enum constant.  (The speed could have been coded in the
 // doAction only and the constructor speed would not have been needed.)
 // Note that another concrete method (speed()) is also shown for example)
+
+// A suggestion for deciding to use parameters or doAction methods or both in the State enum:
+//  If all the states have essentially similar doActions whose only differences can be "parameterized"
+//  using one or more parameters, then use the parameters on the constructor.  Code only one doAction
+//  method or block of code outside of the State enum and use that code after a transition.  Pass the
+//  parameter coresponding to the state to that block of code.
+//  Example may be the motor control shown in this program - all the doActions are essentially
+//  identical and differ only in the speed parameter.  Only one set of code need be made.
+//
+//  If the doActions for the states are significantly different, then code the doAction methods in the
+//  State enum and each state has its own doAction code.  Use parameters, too, if that simplifies
+//  coding similarities between the several states' doAction methods - common code could be put in
+//  another method and receive the parameter appropriate for the state.
+
     Off(Speed.speedOff)
     {
       void doAction(TalonSRX motorController, Speed speed, double speedAdjust){
