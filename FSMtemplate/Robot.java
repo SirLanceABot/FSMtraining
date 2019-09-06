@@ -23,19 +23,19 @@
 // each transition but with the new state.
 //
 // In what may be more an issue of style than substance there are different ways to maintain a
-// state output.  FSM implemented in electronoc logic circuitry maintains its output as the
-// circuits run continuously if powered on.  This Java program runs a bit differently than logic
+// state output.  FSM implemented in electronic logic circuitry maintains its output as the
+// circuits run continuously, if powered on.  This Java program runs a bit differently than logic
 // circuits.
 //
 // Iterative robot runs the FSM repeatedly and scans for inputs on each iteration.  The program
-// acts as if the is an event for each iteration; it would not have to, though.  The program
+// acts as if there is an event for each iteration; it would not have to, though.  The program
 // could check to see if the previous state of the inputs has changed or not and only run the
-// transition engine if the inputs have changes.  Another possibility is to add more transitions
-// with each state looping back to itself.  Then and event would trigger a transition to the
-// same state.  If there is no transition defined then the current state is maintained and the
-// or and error could be thrown that the event wasn't handled. The salient point is the doAction
+// transition engine if the inputs have changed.  Another possibility is to add more transitions
+// with each state looping back to itself.  Then an event would trigger a transition to the
+// same state.  If there is no transition defined, then the current state is maintained and
+// an error could be thrown indicating the event wasn't handled. The salient point is the doAction
 // for the current (or new current) state should be run for the iterative robot.  This refreshes
-// any watchdogs and is recommended to properly maintain a motor speed even if the speed is not
+// any watchdogs and is recommended to maintain properly a motor speed even if the speed is not
 // changed. Thus, if off, stay off, if holding, keep holding; if moving keep moving.
 //
 // This program demonstrates what is the simplest (fewest transitions, least coding but a few
@@ -73,7 +73,7 @@ public class Robot extends TimedRobot {
 // But that means the States (or state names) essentially have to be coded twice -
 // once for the actual State and again here for the Speeds.  I hate duplication.
 // I like just coding the actual speed number in the State but I leave them coded
-// here as an example of what can be done if the speeds must be consolidated.
+// here as an example of what can be done, if the speeds must be consolidated.
 public static enum Speed {
   speedOff (0.00),
   speedHolding(0.05),
