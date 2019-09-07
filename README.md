@@ -25,3 +25,5 @@ Demonstration shown as completed
 
 #7 FSMtemplate - roboRIO; similar to the FSM example in #6.  One complete worked nice FSM style using enums and table look up
 of a Moore FSM - a good model
+
+#8 RosettaCode - copied a FSM example (Java version) from RosettaCode web site
