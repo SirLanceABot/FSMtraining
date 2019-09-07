@@ -39,6 +39,6 @@ See Elevator2019Robot.java for FSM version
 Demonstration shown as completed
 
 #7 FSMtemplate - roboRIO; similar to the FSM example in #6.  One complete worked nice FSM style using enums and table look up
-of a Moore FSM - a good model
+of a Moore FSM - a good FSM model and it even throws in a decision table usage for managing events as a bonus example!
 
 #8 RosettaCode - copied a FSM example (Java version) from RosettaCode web site
