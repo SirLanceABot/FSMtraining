@@ -1,4 +1,19 @@
-FanFSMroboRIO has the latest greatest version of the modified jeasy easy states
+Note that FanFSMroboRIO has the latest greatest version of the modified jeasy easy states
+
+Repository of a variety of ways to implement an FSM in Java.
+
+Arguably the best example is the FSMtemplate that uses Java "enum" to define the states, events, and state transition table.
+Action methods are defined for each state based on the abstract method for the state enum.
+
+Other examples include the use of "if" statements, "switch" statements, "enum" statements, and a"map" statement to define a state
+transition table.  These examples may be approproiate for trivial FSM but beware that often a FSM grows after its initial definition
+so taking a little extra time upfront to use say the full example of the FSMtemplate can reap dividends later.
+
+The rosettacode half-heartedly uses the "enum" statement for the states but then mixes the events and transitions into
+the same "enum".  Not very good modular coding.  It is interesting how the "map" statement is used for the state
+transition table.  But it doesn't seem any better than the "enum" in FSMtemplate.  The rosettacode does show "explicit" and
+"implicit" events - internal and external triggers.  It's another way of handling such cases.  Again not sure that
+FSMtemplate isn't the "best" example for the robot team needs.
 
 # Summer2019FSM
 
