@@ -293,15 +293,22 @@ public static enum Speed {
     // ***
 
 // Decision Table to determine the event based on joystick button press
-// and if near or far from target elevation:
-//                                               Rules
-// Conditions Button Pressed Down           Yes Yes  No  No
-//            AtTargetLocation              Yes  No Yes  No
-//---------------------------------------------------------------
-// Actions    ButtonNotDown Event                    X   X
-//            ButtonDownAtElevation Event    X
-//            ButtonDownNotAtElevation Event     X
+// and if near or far from target elevation.
 //
+// Example:
+// If the condition "Button Pressed Down" is "Yes" and the
+// condition "AtTargetLocation" is "Yes," then do the action
+// "ButtonDownAtElevation Event."
+// _________________________________________________________________
+//|           |                               |      Rules          |
+//|___________|_______________________________|_____________________|
+//| Conditions| Button Pressed Down           | Yes Yes  No  No     |
+//|           | AtTargetLocation              | Yes  No Yes  No     |
+//|___________|_______________________________|_____________________|
+//| Actions   | ButtonNotDown Event           |          X   X      |
+//|           | ButtonDownAtElevation Event   |  X                  |
+//|           | ButtonDownNotAtElevation Event|      X              |
+//|___________|_______________________________|_____________________|
     Event event;
     if ( buttonDown )
      {
