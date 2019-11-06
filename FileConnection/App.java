@@ -4,6 +4,11 @@ open and close requests to move between states and handle a read request as appr
 RK Thomas
 5/23/2019
 */
+
+// the launch.json needs  "console":"integratedTerminal",  to use the terminal for "I/O"
+// (otherwise DEBUG CONSOLE may be used for "O" but not "I" although it will look like it should work it doesn't)
+// use ctrl ` to open a terminal or the Terminal menu item or it might open automatically
+
 package app;
 
 import java.io.IOException;
