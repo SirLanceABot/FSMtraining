@@ -19,7 +19,7 @@ The rosettacode half-heartedly uses the "enum" statement for the states but then
 the same "enum".  Not very good modular coding.  It is interesting how the "map" statement is used for the state
 transition table.  But it doesn't seem any better than the "enum" in FSMtemplate.  The rosettacode does show "explicit" and
 "implicit" events - internal and external triggers.  It's another way of handling such cases.  Again not sure that
-FSMtemplate isn't the "best" example for the robot team needs.
+FanFSM or FSMtemplate aren't the "best" examples for the robot team needs.
 
 # Summer2019FSM
 
