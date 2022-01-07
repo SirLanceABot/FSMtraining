@@ -1,10 +1,10 @@
 package frc.robot;
 
-import java.util.ArrayList;
-
 public final class FanFSM {
 
-  // List of allowed Fan Speeds
+  /**
+   * List of allowed Fan Speeds
+   */
   public static enum Speed {
     Off (0.0),
     High(1.),
@@ -25,8 +25,10 @@ public final class FanFSM {
   }
   // END of allowed Fan Speeds
 
-  // List of the allowed Fan States
-  // each State has actions associated with it - doEnter, doExit, doAction and motor speed parameter
+  /**
+   * List of the allowed Fan States
+   * each State has actions associated with it - doEnter, doExit, doAction
+   */
   public static enum State {
 
   // Having both the argument to the constructor(speed) and implement an abstract method (doAction())
@@ -50,76 +52,95 @@ public final class FanFSM {
 
     Off(Speed.Off)
     {
-      void doEnter(ArrayList<FanFSM.Speed> speedRequest)
+      FanFSM.Speed doEnter()
       {
-        System.out.println("entering state " + this.name()); 
+        System.out.println("entering state " + this.name());
+        return Speed.Off;
       }
 
-      void doAction(ArrayList<FanFSM.Speed> speedRequest){
+      FanFSM.Speed doAction(){
       System.out.println("testing Off");
+      return Speed.Off;
       }
     },
 
     High(Speed.High)
     {
-      void doEnter(ArrayList<FanFSM.Speed> speedRequest)
+      FanFSM.Speed doEnter()
       {
-        System.out.println("entering state " + this.name()); 
+        System.out.println("entering state " + this.name());
+        return Speed.High;
       }
       
-      void doAction(ArrayList<FanFSM.Speed> speedRequest){
+      FanFSM.Speed doAction(){
       System.out.println("testing High");
-      speedRequest.add(Speed.High);        
+      return Speed.High;        
       }
     },
 
     Medium(Speed.Medium)
     {
-      void doEnter(ArrayList<FanFSM.Speed> speedRequest)
+      FanFSM.Speed doEnter()
       {
-        System.out.println("entering state " + this.name()); 
+        System.out.println("entering state " + this.name());
+        return FanFSM.Speed.Medium;
       }
 
-      void doAction(ArrayList<FanFSM.Speed> speedRequest){
+      FanFSM.Speed doAction(){
       System.out.println("testing Medium");
-      speedRequest.add(Speed.Medium);
+      return Speed.Medium;
       }
     },
     
     Low(Speed.Low)
     {
-      void doEnter(ArrayList<FanFSM.Speed> speedRequest)
+      FanFSM.Speed doEnter()
       {
         System.out.println("entering state " + this.name()); 
+        return FanFSM.Speed.Low;
       }
 
-      void doAction(ArrayList<FanFSM.Speed> speedRequest){
+      FanFSM.Speed doAction(){
       System.out.println("testing Low");
-      speedRequest.add(Speed.Low);
+      return Speed.Low;
       }
     };
 
     // methods each state must have for its own
-    abstract void doEnter(ArrayList<FanFSM.Speed> speedRequest);
-    abstract void doAction(ArrayList<FanFSM.Speed> speedRequest);
+    abstract FanFSM.Speed doEnter();
+    abstract FanFSM.Speed doAction();
 
-    // method that each state can use in common
-    void doExit(ArrayList<FanFSM.Speed> speedRequest)
+    /**
+     *  method that each state can use in common
+     * 
+     *  */
+    FanFSM.Speed doExit()
     {
-      var stateExitFanSpeed = Speed.Off;
-      speedRequest.add(stateExitFanSpeed); // all exits the same turn motor off
       System.out.println("exiting state " + this.name() + "; switching motor to " + stateExitFanSpeed);
+      return stateExitFanSpeed; // all exits the same turn motor off
     }
 
     // class variable each state has
     private final Speed speed;
+    private FanFSM.Speed stateExitFanSpeed = Speed.Off;
 
-    State(Speed speed)
+    /**
+     * Construct a state with its associated speed
+     * @param speed
+     */
+    State(FanFSM.Speed speed)
     {
       this.speed = speed;
     }
 
-    // getter for the speed of the state
+
+    /**
+     * getter for the speed of the state
+     * note that this is an inherent property of each state and
+     * not a memory of the current speed of the FSM which must be
+     * held external to the FSM
+     * @return speed associated with this state
+     */
     public Speed getSpeed()
     {
       return speed;
@@ -127,21 +148,22 @@ public final class FanFSM {
   }
 // ** END OF ALLOWED FAN STATES
 
-  // **
-  // *
-  // Events of the FSM
+  /**
+   * Events of the FSM
+   * 
+   *  */
   static enum Event
   {
     none, TimerElapsed
   }
   // ** END OF EVENTS
 
-  // **
-  // *
-  // Transitions of the FSM
-  // each Transition is composed of 2 independent variables - current state and event - 
-  // and a dependent variable - new state
-
+  /**
+   * Transitions of the FSM
+   * 
+   * each Transition is composed of 2 independent variables - current state and event - 
+   * and a dependent variable - new state
+   */
   public static enum Transition
   {
   // transition name   current state        event           new state      
@@ -177,6 +199,9 @@ public final class FanFSM {
   }
   // END OF TRANSITIONS
 
+  /**
+   * initial state of the FSM
+   */
   public static State initialFanState = FanFSM.State.Off;
 
 } // END of FSM

@@ -1,14 +1,12 @@
 /**
- * Finite State Machine to control a three-speed ceiling fan
- * The speed of the fan changes every 3 seconds
+ * Finite State Machine to control a three-speed ceiling fan.
+ * This is the pull-chain model - for every pull change to the next state.
+ * The speed of the fan changes every 3 seconds as if the chain was pulled.
  * The FSM is a bit contrived to illustrate a variety of possibilities such as
  * enter and exit methods and abstract and concrete methods
  * */
 
- package frc.robot;
-
-import java.util.ArrayList;
-import java.util.function.Function;
+package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -19,26 +17,20 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class Robot extends TimedRobot {
 
-  Timer timer1 = new Timer(); // timer is used to generate an event
+  Timer timer1 = new Timer(); // timer is used to generate an event to change states
 
-  FanFSM.Event event;
-  FanFSM.State currentFanState;
-  FanFSM.State newFanState;
-
-  // for each iteration period add a speed to the end of the list and that's the one that will be used
-  ArrayList<FanFSM.Speed> speedRequest = new ArrayList<FanFSM.Speed>(10); // must be initialized with 1 or more adds
+  FanFSM.Event event; // current event to process; force to be a state the FSM knows
+  // save info about states 
+  // some of this could easily be in the FSM but real Moore FSM do not have memory
+  // so consider this stuff as outputs of the FSM
+  FanFSM.State currentFanState; // current state
+  FanFSM.State newFanState; // change to state from current state and event - will be next current state
+  FanFSM.Speed speedRequest; // output of a state that returns motor speed
   
-  // setup motor and supplier to set the (last) speed requested
+  // setup Fan motor - that which is being controlled by the FSM
   int motorCANid = 2;
   TalonFX motor = new TalonFX(motorCANid);
-  Function<ArrayList<FanFSM.Speed>, Double> speed = (speedRequest) -> 
-    {
-      double speed = speedRequest.get(speedRequest.size()-1).value(); // get the last speed saved
-      speedRequest.clear(); // reset for next iteration
-      speedRequest.add(currentFanState.getSpeed()); // so we don't have to check for empty or null
-      return speed;
-    };
-
+  
   @Override
   public void robotInit() {
     motor.setNeutralMode(NeutralMode.Brake);
@@ -46,21 +38,13 @@ public class Robot extends TimedRobot {
 
     // intitial state of FSM
     currentFanState = FanFSM.initialFanState; // start at the initial state
-    speedRequest.add(currentFanState.getSpeed()); // initialize speed for this state so we don't have to check for empty list
-    currentFanState.doEnter(speedRequest); // initiate this state with its entry action
+    speedRequest = currentFanState.doEnter(); // initiate this state with its entry action
+    motor.set(ControlMode.PercentOutput, speedRequest.value()); // set the motor to the initial action
   }
 
   @Override
-  public void robotPeriodic() {}
-
-  @Override
-  public void autonomousInit() {}
-
-  @Override
-  public void autonomousPeriodic() {}
-
-  @Override
   public void teleopInit() {
+    // reset timer that is used to generate an event
     timer1.reset();
     timer1.start();
   }
@@ -69,7 +53,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic()
    {
     // is there an event?
-    event = FanFSM.Event.none; // initially say none
+    event = FanFSM.Event.none; // initially say none then continue on to look for an event
 
     // timer event to change the state automatically every 3 seconds
     if(timer1.hasElapsed(3.))
@@ -81,36 +65,30 @@ public class Robot extends TimedRobot {
     // end of events recognition
     
     // process event to see if it triggers a state change
-    if(event != FanFSM.Event.none)
+    if(event != FanFSM.Event.none) // was there an event to check?
     {
-      // make the transition to a new currentState if an event triggers it
+      // make the transition to a new currentState if an event triggered it
       newFanState = FanFSM.Transition.findNextState (currentFanState, event);
 
       // has the state changed by the event?
+      // There is a choice here depending on the system.
+      // If the state didn't change by this event, you could still go through the doExit
+      // and doEnter because of the event, if that's what makes sense for your FSM.
+      // This code doesn't redo the doExit and doEnter but it does do the doAction
+      // as it does even if there is no event.
       if (newFanState != currentFanState)
       {
         // change states
-        currentFanState.doExit(speedRequest); // exit current state
+        speedRequest = currentFanState.doExit(); // exit current state
         currentFanState = newFanState; // switch states
-        currentFanState.doEnter(speedRequest); // initiate new state
+        speedRequest = currentFanState.doEnter(); // initiate new state
       }
     }
 
-    currentFanState.doAction(speedRequest); // maintain current state or the new state determined above
+    speedRequest = currentFanState.doAction(); // always maintain current state or the new state as determined above
 
     // done with state changing or not so set motor speed to the last speed decided upon
-    motor.set(ControlMode.PercentOutput, speed.apply(speedRequest));
+    motor.set(ControlMode.PercentOutput, speedRequest.value());
   }
 
-  @Override
-  public void disabledInit() {}
-
-  @Override
-  public void disabledPeriodic() {}
-
-  @Override
-  public void testInit() {}
-
-  @Override
-  public void testPeriodic() {}
 }
