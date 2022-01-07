@@ -1,8 +1,14 @@
-Note that FanFSMroboRIO has the latest greatest version of the modified jeasy easy states
-
 Repository of a variety of ways to implement an FSM in Java.
+Use FanFSM on the roboRIO!
 
-Arguably the best example is the FSMtemplate that uses Java "enum" to define the states, events, and state transition table.
+Note that FanFSMroboRIO has the latest greatest version of the modified jeasy easy states.
+But jeasy easy states is NOT recommended for use by the team.
+
+Arguably the best example is the FanFSM that uses Java "enum" to define the states, events, and state transition table.
+Enter, Action, and Exit methods are defined for each state based on the abstract method for the state enum.
+It runs on the roboRIO and does not use jeasy easy states.
+
+Another good example but slightly less complete of an example is the FSMtemplate that uses Java "enum" to define the states, events, and state transition table.
 Action methods are defined for each state based on the abstract method for the state enum.
 
 Other examples include the use of "if" statements, "switch" statements, "enum" statements, and a"map" statement to define a state
@@ -42,3 +48,5 @@ Demonstration shown as completed
 of a Moore FSM - a good FSM model and it even throws in a decision table usage for managing events as a bonus example!
 
 #8 RosettaCode - copied a FSM example (Java version) from RosettaCode web site
+
+#9 FanFSM - roboRIO; most complete example using Java enum and table lookup of a Moore FSM - best example here
