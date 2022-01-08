@@ -244,7 +244,7 @@ public class FanFSM {
       currentFanState = newFanState; // switch states
       speedRequest = currentFanState.doEnter(); // initiate new state
     }
-
+    // move the doAction beloow into the above "if" block to only run it on state change
     speedRequest = currentFanState.doAction(); // always maintain current state or the new state as determined above
 
   }
@@ -266,6 +266,7 @@ public class FanFSM {
   {
     return currentFanState;
   }
+  
   /**
    * print information about the FSM
    * @return String of information about the FSM
