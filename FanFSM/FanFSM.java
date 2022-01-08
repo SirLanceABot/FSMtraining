@@ -7,10 +7,10 @@ public class FanFSM {
   private State currentFanState; // current state
   private Speed speedRequest; // output of a state that returns motor speed
 
-  // instatiate a fanFSM object
+  // instantiate a fanFSM object
   FanFSM ()
   {
-       // intitial state of FSM
+       // initial state of FSM
        currentFanState = FanFSM.initialFanState; // start at the initial state
        speedRequest = currentFanState.doEnter(); // initiate this state with its entry action
        speedRequest = currentFanState.doAction(); // settle into the initial state
@@ -24,7 +24,7 @@ public class FanFSM {
   /**
    * List of allowed Fan Speeds
    * 
-   * This could be publicly changable in some manner say through the FSM constructor
+   * This could be publicly changeable in some manner say through the FSM constructor
    * For now it's hardwired here
    */
   private static enum Speed {
@@ -67,7 +67,7 @@ public class FanFSM {
   //  If all the states have essentially similar doActions whose only differences can be "parameterized"
   //  using one or more parameters, then use the parameters on the constructor.  Code only one doAction
   //  method or block of code outside of the State enum and use that code after a transition.  Pass the
-  //  parameter coresponding to the state to that block of code.
+  //  parameter corresponding to the state to that block of code.
   //  Example may be the motor control shown in this program - all the doActions are essentially
   //  identical and differ only in the speed parameter.  Only one set of code need be made.
   //
@@ -163,7 +163,7 @@ public class FanFSM {
      * getter for the named speed associated with each possible state
      * note that this is an inherent property of each state and
      * not a memory of the current speed of the FSM
-     * @return mamed speed associated with this state
+     * @return named speed associated with this state
      */
     public Speed value()
     {
@@ -211,7 +211,7 @@ public class FanFSM {
     private static State findNextState (State currentState, Event event)
     {
       // for efficiency could check for no event but that's another "if" statement to understand and it's not
-      // needed for the logic unless not finding a corresponding transistion is considered an error
+      // needed for the logic unless not finding a corresponding transition is considered an error
       for (Transition transition : Transition.values())
       {
         if (transition.currentState == currentState && transition.event == event) return transition.nextState;
