@@ -1,3 +1,17 @@
+/**
+ * Finite State Machine to control a three-speed ceiling fan.
+ * This is the pull-chain model - for every pull change to the next state.
+ * The FSM is a contrived demo to illustrate a variety of possibilities such
+ * as enter and exit methods and abstract and concrete methods.
+ * 
+ * Additional work could include a STOP FSM state and event to enter that state.
+ * This is not the stop fan state but the state that ends the execution of the FSM.
+ * There would be no output - say NaN or null to indicate nothing produced by the FSM.
+ * 
+ * An embellishment for the fan could include the reverse switch that changes the
+ * direction of the fan on an event of the seasons changing.
+ * */
+
 package frc.robot;
 
 public class FanFSM {
@@ -5,7 +19,7 @@ public class FanFSM {
   // save info about current state output - not really memory since Moore FSM has no memory
   // but it has to know where it currently stands and its output
   private State currentFanState; // current state
-  private Speed speedRequest; // output of a state that returns motor speed
+  private Speed speedRequest; // output of a state that returns output speed
 
   // instantiate a fanFSM object
   FanFSM ()
@@ -22,7 +36,7 @@ public class FanFSM {
   private static State initialFanState = FanFSM.State.Off;
 
   /**
-   * List of allowed Fan Speeds
+   * List of allowed Fan Speeds by name and the FanFSM output value associated with that name
    * 
    * This could be publicly changeable in some manner say through the FSM constructor
    * For now it's hardwired here
@@ -49,7 +63,7 @@ public class FanFSM {
         return speed;
     }
   }
-  // END of allowed Fan Speeds
+   // END of allowed Fan Speeds
 
   /**
    * List of the allowed Fan States
@@ -57,98 +71,96 @@ public class FanFSM {
    */
   private static enum State {
 
-  // Having both the argument to the constructor(speed) and implement an abstract method (doAction())
-  // is redundant, at least it is in this example, but they are presented as a tutorial of how to
-  // pass both a variable and a method to an enum constant.  (The speed could have been coded in the
-  // doAction only and the constructor speed would not have been needed.)
-  // Note that another concrete method (speed()) is also shown for example)
+    /**
+    Having both the argument to the constructor(speed) and implement an abstract method (doAction())
+    is redundant, at least it is in this example, but they are presented as a tutorial of how to
+    pass both a variable and a method to an enum constant.  (The speed could have been coded in the
+    doAction only and the constructor speed would not have been needed.)
+    Note that another concrete method (speed()) is also shown for example)
 
-  // A suggestion for deciding to use parameters or doAction methods or both in the State enum:
-  //  If all the states have essentially similar doActions whose only differences can be "parameterized"
-  //  using one or more parameters, then use the parameters on the constructor.  Code only one doAction
-  //  method or block of code outside of the State enum and use that code after a transition.  Pass the
-  //  parameter corresponding to the state to that block of code.
-  //  Example may be the motor control shown in this program - all the doActions are essentially
-  //  identical and differ only in the speed parameter.  Only one set of code need be made.
-  //
-  //  If the doActions for the states are significantly different, then code the doAction methods in the
-  //  State enum and each state has its own doAction code.  Use parameters, too, if that simplifies
-  //  coding similarities between the several states' doAction methods - common code could be put in
-  //  another method and receive the parameter appropriate for the state.
+    A suggestion for deciding to use parameters or doAction methods or both in the State enum:
+    If all the states have essentially similar doActions whose only differences can be "parameterized"
+    using one or more parameters, then use the parameters on the constructor.  Code only one doAction
+    method or block of code outside of the State enum and use that code after a transition.  Pass the
+    parameter corresponding to the state to that block of code.
+    Example may be the output control shown in this program - all the doActions are essentially
+    identical and differ only in the speed parameter.  Only one set of code need be made.
+  
+    If the doActions for the states are significantly different, then code the doAction methods in the
+    State enum and each state has its own doAction code.  Use parameters, too, if that simplifies
+    coding similarities between the several states' doAction methods - common code could be put in
+    another method and receive the parameter appropriate for the state.
+     */
 
     Off(Speed.Off)
     {
-      FanFSM.Speed doEnter()
-      {
-        System.out.println("entering state " + this.name());
-        return Speed.Off;
-      }
-
       FanFSM.Speed doAction(){
-      System.out.println("testing Off");
-      return Speed.Off;
+      System.out.println("this is something unique to Off");
+      return this.speed;
       }
     },
 
     High(Speed.High)
     {
-      FanFSM.Speed doEnter()
-      {
-        System.out.println("entering state " + this.name());
-        return Speed.High;
-      }
-      
       FanFSM.Speed doAction(){
-      System.out.println("testing High");
-      return Speed.High;        
+      System.out.println("this is something unique to High");
+      return this.speed;        
       }
     },
 
     Medium(Speed.Medium)
     {
-      FanFSM.Speed doEnter()
-      {
-        System.out.println("entering state " + this.name());
-        return FanFSM.Speed.Medium;
-      }
-
       FanFSM.Speed doAction(){
-      System.out.println("testing Medium");
-      return Speed.Medium;
+      System.out.println("this is something unique to Medium");
+      return this.speed;
       }
     },
     
     Low(Speed.Low)
     {
-      FanFSM.Speed doEnter()
-      {
-        System.out.println("entering state " + this.name()); 
-        return FanFSM.Speed.Low;
-      }
-
       FanFSM.Speed doAction(){
-      System.out.println("testing Low");
-      return Speed.Low;
+      System.out.println("this is something unique to Low");
+      return this.speed;
       }
     };
 
-    // methods each state must have for its own
-    abstract FanFSM.Speed doEnter();
+    /**
+     * method each state must have for its own because the code is different in this example
+     */
+
+    /**
+     * 
+     * @return
+     */
     abstract FanFSM.Speed doAction();
 
     /**
-     *  method that each state can use in common
+     *  methods each state can use in common because the code is the same in this example
+     */
+
+    /**
      * 
-     *  */
-    FanFSM.Speed doExit()
+     * @return
+     */
+    FanFSM.Speed doEnter()
     {
-      System.out.println("exiting state " + this.name() + "; switching motor to " + stateExitFanSpeed);
-      return stateExitFanSpeed; // all exits the same turn motor off
+      System.out.println("entering state " + this.name()); 
+      return this.speed;
     }
 
-    // class variable each state has
-    private final Speed speed;
-    private FanFSM.Speed stateExitFanSpeed = Speed.Off;
+    /**
+     * 
+     * @return
+     */
+    FanFSM.Speed doExit()
+    {
+      System.out.println("exiting state " + this.name() + "; switching FanFSM output to " + stateExitFanSpeed);
+      return stateExitFanSpeed; // all exits the same turn output off
+    }
+
+    // class variables each state has
+    protected final Speed speed;
+    protected FanFSM.Speed stateExitFanSpeed = Speed.Off;
 
     /**
      * Construct a state with its associated speed
@@ -175,7 +187,7 @@ public class FanFSM {
   /**
    * Events of the FSM
    * 
-   *  */
+   */
   public static enum Event
   {
     none, chainPulled
@@ -190,7 +202,7 @@ public class FanFSM {
    */
   private static enum Transition
   {
-  // transition name   current state        event           new state      
+  // transition name   current state        event           new state
     TRANSITION_01 (State.Off,      Event.chainPulled, State.High),
     TRANSITION_02 (State.High,     Event.chainPulled, State.Medium),
     TRANSITION_03 (State.Medium,   Event.chainPulled, State.Low),
@@ -207,7 +219,13 @@ public class FanFSM {
       this.nextState = nextState;
     }
 
-    // table lookup to determine new state given the current state and the event
+    /**
+     * table lookup to determine new state given the current state and the event
+     * 
+     * @param currentState
+     * @param event
+     * @return
+     */
     private static State findNextState (State currentState, Event event)
     {
       // for efficiency could check for no event but that's another "if" statement to understand and it's not
@@ -247,7 +265,6 @@ public class FanFSM {
     }
     // move above doAction to below to always run it
     // speedRequest = currentFanState.doAction(); // always maintain current state or the new state as determined above
-
   }
 
   /**

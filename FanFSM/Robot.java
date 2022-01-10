@@ -1,9 +1,7 @@
 /**
- * Finite State Machine to control a three-speed ceiling fan.
- * This is the pull-chain model - for every pull change to the next state.
- * The speed of the fan changes every 3 seconds as if the chain was pulled.
- * The FSM is a contrived demo to illustrate a variety of possibilities such
- * as enter and exit methods and abstract and concrete methods
+ * Three-speed ceiling fan controlled by a Finite State Machine (FSM).
+ * This is the pull-chain model -- for every pull of the chain change to the next state.
+ * The speed of the fan changes automatically every 3 seconds as if the chain was pulled.
  * */
 
 package frc.robot;
@@ -52,7 +50,7 @@ public class Robot extends TimedRobot {
     event = FanFSM.Event.none; // initially say none then continue on to look for an event
 
     // timer event to change the state automatically every 3 seconds with a pretend chain pull
-    if(timer1.hasElapsed(3.))
+    if(timer1.advanceIfElapsed(3.))
     {
       event = FanFSM.Event.chainPulled;  
       timer1.reset();
@@ -61,6 +59,7 @@ public class Robot extends TimedRobot {
 
     fanFSM.checkStateChange(event); // send the event to the FSM
 
+    // System.out.println(fanFSM.speed());
     // done with any state changing or maintaining; set motor speed to the last speed decided upon by the FSM
     motor.set(ControlMode.PercentOutput, fanFSM.speed());
   }
