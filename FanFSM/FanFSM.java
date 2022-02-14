@@ -1,5 +1,9 @@
 /**
  * Finite State Machine to control a three-speed ceiling fan.
+ * 
+ * This FSM has an output that is the requested speed that should then be given to the
+ * motor controller to effect the motor speed.
+ * 
  * This is the pull-chain model - for every pull change to the next state.
  * The FSM is a contrived demo to illustrate a variety of possibilities such
  * as enter and exit methods and abstract and concrete methods.
@@ -10,6 +14,11 @@
  * 
  * An embellishment for the fan could include the reverse switch that changes the
  * direction of the fan on an event of the seasons changing.
+ * 
+ * Another embellishment would be to determine the initial state from sensors on
+ * the motor or motor controller instead of assuming OFF. [For safety, motors should be told
+ * to start at off but that doesn't always happen - need to coordinate the FSM starting
+ * with the actual hardware state somehow.  Be AWARE!]
  * */
 
 package frc.robot;
@@ -253,8 +262,8 @@ public class FanFSM {
     // There is a choice here depending on the system.
     // If the state didn't change by this event, you could still go through the doExit
     // and doEnter because of the event, if that's what makes sense for your FSM.
-    // This code doesn't redo the doExit and doEnter but it does do the doAction
-    // as it does even if there is no event.
+    // This code doesn't redo the doExit, doEnter, and doAction but there is a comment below
+    // to move the doAction if you always want to execute it even if no event or state change.
     if (newFanState != currentFanState)
     {
       // change states
