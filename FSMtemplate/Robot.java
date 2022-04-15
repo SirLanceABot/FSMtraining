@@ -41,14 +41,14 @@
 // This program demonstrates what is the simplest (fewest transitions, least coding but a few
 // more computer cycles are used) way to run doAction on every iteration.
 
-// The FSM does not have transistions to maintain a state - no event triggers Off to Off,
+// The FSM does not have transitions to maintain a state - no event triggers Off to Off,
 // Moving to Moving, nor Holding to Holding.  The events are processed on every iteration - no
 // check to see if the event is new and thus may cause a transition to a new state - the FSM
-// transistion engine does that.  The transition engine returns the current state if no
+// transition engine does that.  The transition engine returns the current state if no
 // transition had to be performed.  The doAction is run on every iteration to maintain the
 // state as recommended in robot programming even if the state has not changed.
 
-// Potential improvments to the robot control logic:
+// Potential improvements to the robot control logic:
 // Better co-ordinate the moving/holding when near the target elevation because the motor
 // controller deadband clashes over so slightly with the P speed controller.  Note that this
 // simple implementation of the P controller does account for correctly holding even if the
@@ -108,7 +108,7 @@ public static enum Speed {
 //  If all the states have essentially similar doActions whose only differences can be "parameterized"
 //  using one or more parameters, then use the parameters on the constructor.  Code only one doAction
 //  method or block of code outside of the State enum and use that code after a transition.  Pass the
-//  parameter coresponding to the state to that block of code.
+//  parameter corresponding to the state to that block of code.
 //  Example may be the motor control shown in this program - all the doActions are essentially
 //  identical and differ only in the speed parameter.  Only one set of code need be made.
 //
