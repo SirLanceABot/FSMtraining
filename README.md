@@ -1,7 +1,7 @@
 Repository of a variety of ways to implement an FSM in Java.
 Use FanFSM on the roboRIO!
 
-Training lectures notes are on the team Google Drive: Team 4237 Students > Software Team > FSM Training
+Training lecture notes are on the team Google Drive: Team 4237 Students > Software Team > FSM Training
 
 Note that FanFSMroboRIO has the latest greatest version of the modified jeasy easy states.
 But jeasy easy states is NOT recommended for use by the team.
