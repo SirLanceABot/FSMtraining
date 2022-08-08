@@ -21,7 +21,7 @@ transition table.  But it doesn't seem any better than the "enum" in FSMtemplate
 "implicit" events - internal and external triggers.  It's another way of handling such cases.  Again not sure that
 FanFSM or FSMtemplate aren't the "best" examples for the robot team needs.
 
-# Summer2019FSM
+# FSMtraining
 
 Finite State Machines lessons - examples and "answers" to exercises.
 
