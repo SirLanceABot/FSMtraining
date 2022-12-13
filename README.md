@@ -52,5 +52,8 @@ of a Moore FSM - a good FSM model and it even throws in a decision table usage f
 #8 RosettaCode - copied a FSM example (Java version) from RosettaCode web site
 
 #9 FanFSM - roboRIO; most complete example using Java enum and table lookup of a Moore FSM - best example here
+   The command-based rendition of the FanFSM is at:
+   https://github.com/SirLanceABot/Training/blob/master/robotCommandBased/subsystems/FanFSMSubsystem.java
+   https://github.com/SirLanceABot/Training/blob/master/robotCommandBased/commands/FanFSMCommand.java
 
 #10 TableLamp - another good, simple example with required doEnter and optional, common, overridable doAction
